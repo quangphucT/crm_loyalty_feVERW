@@ -2,22 +2,22 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("accessToken")?.value;
+  const accessToken = req.cookies.get("accessToken")?.value;
 
   const isAuthPage = req.nextUrl.pathname.startsWith("/login");
-  const isDashboard = req.nextUrl.pathname.startsWith("/dashboard");
+  const isDashboard = req.nextUrl.pathname.startsWith("/dashboard_layout");
 
-  if (!token && isDashboard) {
+  if (!accessToken && isDashboard) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (token && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+  if (accessToken && isAuthPage) {
+    return NextResponse.redirect(new URL("/dashboard_layout", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/dashboard_layout/:path*", "/login"],
 };

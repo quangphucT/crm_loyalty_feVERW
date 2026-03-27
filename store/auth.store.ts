@@ -1,22 +1,65 @@
-import { create } from "zustand";
+import { create } from "zustand"
+import { devtools, persist } from "zustand/middleware"
 
-type AuthState = {
-  accessToken: string | null;
-  user: any;
-  setToken: (token: string | null) => void;
-  setUser: (user: any) => void;
-  logout: () => void;
-};
+interface User {
+  role?: string
+  username?: string
+}
 
-export const useAuthStore = create<AuthState>((set) => ({
-  accessToken: null,
-  user: null,
+interface AuthState {
+  user: User | null
+  isAuthenticated: boolean
+  isHydrated: boolean
+  setAuth: (data: {
+    role?: string
+    username?: string
+  }) => void
 
-  setToken: (token) => set({ accessToken: token }),
-  setUser: (user) => set({ user }),
+  clearAuth: () => void
+  setHydrated: () => void
+}
 
-  logout: () => {
-    localStorage.removeItem("accessToken");
-    set({ accessToken: null, user: null });
-  },
-}));
+export const useAuthStore = create<AuthState>()(
+  devtools(
+    persist(
+      (set) => ({
+     
+        user: null,
+        isAuthenticated: false,
+        isHydrated: false,
+        
+        setAuth: (data) =>
+          set(
+            {
+              user: {
+                username: data.username,
+                role: data.role,
+              },
+              isAuthenticated: true,
+            },
+            false,
+            "setAuth"
+          ),
+
+        clearAuth: () =>
+          set(
+            {
+              user: null,
+              isAuthenticated: false,
+            },
+            false,
+            "clearAuth"
+          ),
+
+        setHydrated: () => set({ isHydrated: true }),
+      }),
+      {
+        name: "auth-storage",
+        onRehydrateStorage: () => (state) => {
+          state?.setHydrated()
+        },
+      }
+    ),
+    { name: "auth-store" }
+  )
+)

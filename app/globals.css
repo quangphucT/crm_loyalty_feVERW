@@ -49,6 +49,7 @@
 }
 
 :root {
+  --font-sans: var(--font-roboto), "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -126,5 +127,37 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@keyframes login-slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes login-slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .animate-login-left {
+    animation: login-slide-in-left 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-login-right {
+    animation: login-slide-in-right 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
