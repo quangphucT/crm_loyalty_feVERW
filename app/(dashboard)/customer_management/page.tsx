@@ -455,13 +455,13 @@ const CustomerManagement = () => {
         className="hover:bg-slate-50/60 transition-colors"
       >
         {/* Mã khách hàng */}
-        <td className="px-6 py-4 text-slate-700 text-center whitespace-nowrap">
+        <td className="px-3 md:px-4 py-3 text-slate-700 text-center whitespace-nowrap">
           {customer.customerCode || "—"}
         </td>
 
         {/* Khách hàng (Tên + SĐT) */}
-        <td className="px-6 py-4 text-slate-900">
-          <div className="max-w-[220px] text-left">
+        <td className="px-3 md:px-4 py-3 text-slate-900">
+          <div className="max-w-[200px] md:max-w-[240px] text-left">
             <div
               className="block w-full truncate font-medium"
               title={customer.fullName}
@@ -475,31 +475,31 @@ const CustomerManagement = () => {
         </td>
 
         {/* Email - FIX CHÍNH Ở ĐÂY */}
-        <td className="px-6 py-4 text-slate-700">
-          <div className="truncate max-w-[240px]" title={customer.email || ""}>
+        <td className="px-3 md:px-4 py-3 text-slate-700">
+          <div className="truncate max-w-[220px] md:max-w-[260px]" title={customer.email || ""}>
             {customer.email || "—"}
           </div>
         </td>
 
         {/* Điểm tích lũy */}
-        <td className="px-6 py-4 text-slate-700 text-center whitespace-nowrap">
+        <td className="px-3 md:px-4 py-3 text-slate-700 text-center whitespace-nowrap">
           {(customer.totalPoints ?? 0).toLocaleString("vi-VN")}
         </td>
 
         {/* Tỉnh / Thành phố */}
-        <td className="px-6 py-4">
+        <td className="px-3 md:px-4 py-3">
           <span className="inline-block max-w-[150px] rounded-full bg-sky-50 px-3 py-1 text-xs text-sky-600 break-words whitespace-normal">
             {customer.province || "N/A"}
           </span>
         </td>
 
         {/* Mã giới thiệu */}
-        <td className="px-6 py-4 text-slate-700 text-center whitespace-nowrap">
+        <td className="px-3 md:px-4 py-3 text-slate-700 text-center whitespace-nowrap">
           {customer.referralCode || "Chưa có"}
         </td>
 
         {/* Hành động - Popover */}
-        <td className="px-6 py-4 text-center">
+        <td className="px-3 md:px-4 py-3 text-center">
           <Popover>
             <PopoverTrigger asChild>
               <div className="flex justify-center">
@@ -697,7 +697,7 @@ const CustomerManagement = () => {
               </Button>
             </DialogTrigger>
 
-            <DialogContent>
+            <DialogContent className="max-w-lg sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>Thêm khách hàng mới</DialogTitle>
               </DialogHeader>
@@ -916,7 +916,7 @@ const CustomerManagement = () => {
               }
             }}
           >
-            <DialogContent>
+            <DialogContent className="max-w-lg sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>Cập nhật khách hàng</DialogTitle>
               </DialogHeader>
@@ -1539,22 +1539,22 @@ const CustomerManagement = () => {
         </Button>
       </form>
 
-      <div className="w-full max-w-full overflow-x-auto max-h-[520px] overflow-y-auto">
-        <table className="w-[1000px] table-fixed divide-y divide-slate-100 text-left">
-          <thead className="bg-sky-50/70 text-xs uppercase tracking-wider text-slate-500">
+      <div className="w-full max-w-full overflow-x-auto max-h-[500px] overflow-y-auto">
+        <table className="min-w-[760px] md:min-w-[920px] table-fixed divide-y divide-slate-100 text-left text-xs md:text-sm">
+          <thead className="bg-sky-50/70 text-[11px] md:text-xs uppercase tracking-wider text-slate-500">
             <tr>
-              <th className="px-6 py-3 whitespace-nowrap">Mã khách hàng</th>
-              <th className="px-6 py-3 whitespace-nowrap">Khách hàng</th>
-              <th className="px-6 py-3 whitespace-nowrap">Email</th>
-              <th className="px-6 py-3 whitespace-nowrap">Điểm tích lũy</th>
-              <th className="px-6 py-3 whitespace-nowrap">Tỉnh / Thành</th>
-              <th className="px-6 py-3 whitespace-nowrap">Mã giới thiệu</th>
-              <th className="px-6 py-3 whitespace-nowrap text-right">
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Mã khách hàng</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Khách hàng</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Email</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Điểm tích lũy</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Tỉnh / Thành</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap">Mã giới thiệu</th>
+              <th className="px-3 md:px-4 py-3 whitespace-nowrap text-right">
                 Hành động
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-250 text-sm [&>tr:nth-child(even)]:bg-slate-50/50">
+          <tbody className="divide-y divide-slate-250 text-xs md:text-sm [&>tr:nth-child(even)]:bg-slate-50/50">
             {renderTableBody()}
           </tbody>
         </table>
