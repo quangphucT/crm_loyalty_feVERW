@@ -1021,10 +1021,8 @@ const CustomerManagement = () => {
                               </CommandEmpty>
 
                               <CommandGroup
-                                onWheel={(e) => {
-                                  e.currentTarget.scrollTop += e.deltaY;
-                                }}
                                 className="max-h-64 overflow-auto"
+                                style={{ WebkitOverflowScrolling: "touch" }}
                               >
                                 <CommandItem
                                   value="Tất cả"
@@ -1479,7 +1477,10 @@ const CustomerManagement = () => {
                 <CommandInput placeholder="Tìm tỉnh / thành..." />
                 <CommandEmpty>Không tìm thấy tỉnh phù hợp.</CommandEmpty>
 
-                <CommandGroup className="max-h-64 overflow-auto">
+                <CommandGroup
+                  className="max-h-64 overflow-auto"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   <CommandItem
                     value="Tất cả"
                     onSelect={() =>
