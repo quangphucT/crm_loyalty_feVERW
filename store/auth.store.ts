@@ -4,6 +4,8 @@ import { devtools, persist } from "zustand/middleware"
 interface User {
   role?: string
   username?: string
+  refreshToken?: string
+  deviceId?: string
 }
 
 interface AuthState {
@@ -13,6 +15,8 @@ interface AuthState {
   setAuth: (data: {
     role?: string
     username?: string
+    refreshToken?: string
+    deviceId?: string
   }) => void
 
   clearAuth: () => void
@@ -34,6 +38,8 @@ export const useAuthStore = create<AuthState>()(
               user: {
                 username: data.username,
                 role: data.role,
+                refreshToken: data.refreshToken,
+                deviceId: data.deviceId,
               },
               isAuthenticated: true,
             },

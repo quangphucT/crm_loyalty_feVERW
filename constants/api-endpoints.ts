@@ -1,6 +1,8 @@
 
 export const AUTH_API = {
-  LOGIN: "/auth/login"
+  LOGIN: "/auth/login",
+  REFRESH_TOKEN: "/auth/refresh-token",
+  LOGOUT: "/auth/logout",
 };
 
 export const CUSTOMER_API = {

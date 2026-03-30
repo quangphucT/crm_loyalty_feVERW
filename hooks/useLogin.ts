@@ -21,6 +21,8 @@ export const useLogin = () => {
       setAuth({
         username: data.data.signInResponse.username,
         role: data.data.signInResponse.role,
+        refreshToken: data.data.refreshToken,
+        deviceId: data.data.deviceId,
       });
       router.push("dashboard_layout");
       toast.success("Đăng nhập thành công!");

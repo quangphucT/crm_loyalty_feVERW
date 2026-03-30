@@ -44,6 +44,7 @@ const CustomerManagement = () => {
   const [isApplyingFilters, setIsApplyingFilters] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
   // CREATE
   const {data: provincesCreate = [],isLoading: isLoadingCreate,isFetching: isFetchingCreate} = useProvinces({enabled: shouldLoadProvincesForCreate, context: "create"});
   // EDIT
@@ -179,6 +180,63 @@ const CustomerManagement = () => {
     setFormFilters(nextFilters);
     setAppliedFilters(nextFilters);
     setPage(0);
+  };
+
+  const handleExportCustomers = () => {
+    if (!customers?.length) {
+      toast.info("Không có dữ liệu để xuất.");
+      return;
+    }
+
+    try {
+      setIsExporting(true);
+      const headers = [
+        "Mã khách hàng",
+        "Họ và tên",
+        "Số điện thoại",
+        "Email",
+        "Điểm tích lũy",
+        "Tỉnh / Thành",
+        "Mã giới thiệu",
+      ];
+
+      const rows = customers.map((customer) => [
+        customer.customerCode ?? "",
+        customer.fullName ?? "",
+        customer.phone ?? "",
+        customer.email ?? "",
+        customer.totalPoints ?? 0,
+        customer.province ?? "",
+        customer.referralCode ?? "",
+      ]);
+
+      const csvContent = [headers, ...rows]
+        .map((row) =>
+          row
+            .map((value) => {
+              const cell = String(value ?? "");
+              const escaped = cell.replace(/"/g, '""');
+              return `"${escaped}"`;
+            })
+            .join(","),
+        )
+        .join("\r\n");
+
+      const blob = new Blob(["\ufeff" + csvContent], {
+        type: "text/csv;charset=utf-8;",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `customers_${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Export customers failed", error);
+      toast.error("Xuất Excel thất bại. Vui lòng thử lại.");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const openEditDialog = (customer: Customer) => {
@@ -827,6 +885,19 @@ const CustomerManagement = () => {
               </Form>
             </DialogContent>
           </Dialog>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="cursor-pointer"
+            onClick={handleExportCustomers}
+            disabled={isExporting || isApplyingFilters || isFetching}
+          >
+            {isExporting ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            Xuất Excel
+          </Button>
 
           <Button
             type="button"

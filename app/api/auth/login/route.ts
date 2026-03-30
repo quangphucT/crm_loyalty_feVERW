@@ -16,16 +16,13 @@ export async function POST(req: Request) {
   if (!backendRes.ok) {
     return NextResponse.json(data, { status: backendRes.status });
   }
-
-  const secure = process.env.NODE_ENV === "production";
-
   //  tạo response trước
   const res = NextResponse.json(data);
   
   //  set cookie tại đây
   res.cookies.set("accessToken", data.data.accessToken, {
     httpOnly: true,
-    secure,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     sameSite: "lax",
     maxAge: 60,
@@ -33,10 +30,10 @@ export async function POST(req: Request) {
 
   res.cookies.set("refreshToken", data.data.refreshToken, {
     httpOnly: true,
-    secure,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     sameSite: "lax",
-    maxAge: 120,
+    maxAge: 60*5, 
   });
 
   return res;

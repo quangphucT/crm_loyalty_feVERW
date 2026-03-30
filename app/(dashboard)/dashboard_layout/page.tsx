@@ -10,7 +10,6 @@ import { panelContent } from "@/constants/panelContent-dashboard";
 const DashboardLayout = () => {
   const [activeItem, setActiveItem] = useState(menuItems[0].id);
   const activePanel = panelContent[activeItem];
-
   return (
     <div className="min-h-screen bg-[#f7f2ea] px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
       <div className="flex min-h-[calc(100vh-48px)] flex-col gap-8 rounded-[32px] border border-slate-100 bg-white/60 p-4 shadow-2xl shadow-slate-200/60 backdrop-blur-lg lg:flex-row lg:p-6">
