@@ -6,11 +6,18 @@ export interface LoginPayload {
 export interface ErrorResponse {
   message: string
 }
-export interface data {
-    role: string;
-    username: string;
-}
 export interface SignInResponse {
-    message: string;
-    data: data;
+  role: string;     
+  username: string;  
+}
+
+export interface AuthData {
+  signInResponse: SignInResponse;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface LoginResponse {
+  message: string;
+  data: AuthData;  
 }
