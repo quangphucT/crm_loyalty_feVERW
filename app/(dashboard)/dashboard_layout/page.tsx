@@ -10,49 +10,59 @@ import { panelContent } from "@/constants/panelContent-dashboard";
 const DashboardLayout = () => {
   const [activeItem, setActiveItem] = useState(menuItems[0].id);
   const activePanel = panelContent[activeItem];
+  const renderNavButton = (itemId: string) => {
+    const item = menuItems.find((m) => m.id === itemId);
+    if (!item) return null;
+    const Icon = item.icon;
+    const isActive = activeItem === item.id;
+    return (
+      <button
+        key={item.id}
+        type="button"
+        onClick={() => setActiveItem(item.id)}
+        className={cn(
+          "group flex shrink-0 items-center gap-3 rounded-2xl border px-3 py-3 text-left text-sm font-medium transition-all md:px-4",
+          isActive
+            ? "border-sky-200 bg-sky-50/80 text-sky-900 shadow-md shadow-sky-200"
+            : "border-transparent text-slate-500 hover:border-slate-200 hover:bg-white",
+        )}
+      >
+        <span
+          className={cn(
+            "flex size-9 items-center justify-center rounded-xl border",
+            isActive
+              ? "border-sky-200 bg-white text-sky-600"
+              : "border-slate-200 bg-white text-slate-400",
+          )}
+        >
+          <Icon size={18} />
+        </span>
+        <span className="whitespace-nowrap">{item.label}</span>
+        <span className="ml-auto text-xs text-slate-400 group-hover:text-slate-500">
+          {isActive ? "Đang xem" : "Xem"}
+        </span>
+      </button>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-[#f7f2ea] px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
-      <div className="flex min-h-[calc(100vh-48px)] flex-col gap-8 rounded-[32px] border border-slate-100 bg-white/60 p-4 shadow-2xl shadow-slate-200/60 backdrop-blur-lg lg:flex-row lg:p-6">
-        <aside className="w-full max-w-xs rounded-[28px] border border-white/80 bg-[#fff8f0] p-4 shadow-inner shadow-slate-200/70 lg:p-6">
+    <div className="min-h-screen bg-[#f7f2ea] px-3 py-4 sm:px-6 lg:px-10 lg:py-10">
+      <div className="flex min-h-[calc(100vh-48px)] flex-col gap-6 rounded-[32px] border border-slate-100 bg-white/60 p-3 shadow-2xl shadow-slate-200/60 backdrop-blur-lg lg:flex-row lg:gap-8 lg:p-6">
+        <aside className="hidden lg:block w-full max-w-xs rounded-[28px] border border-white/80 bg-[#fff8f0] p-4 shadow-inner shadow-slate-200/70 lg:p-6">
           <HeaderSideBar />
           <nav className="mt-6 space-y-2">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeItem === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setActiveItem(item.id)}
-                  className={cn(
-                    "group flex cursor-pointer w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-all",
-                    isActive
-                      ? "border-sky-200 bg-sky-50/80 text-sky-900 shadow-md shadow-sky-200"
-                      : "border-transparent text-slate-500 hover:border-slate-200 hover:bg-white",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "flex size-9 items-center justify-center rounded-xl border",
-                      isActive
-                        ? "border-sky-200 bg-white text-sky-600"
-                        : "border-slate-200 bg-white text-slate-400",
-                    )}
-                  >
-                    <Icon size={18} />
-                  </span>
-                  <span>{item.label}</span>
-                  <span className="ml-auto text-xs text-slate-400 group-hover:text-slate-500">
-                    {isActive ? "Đang xem" : "Xem"}
-                  </span>
-                </button>
-              );
-            })}
+            {menuItems.map((item) => renderNavButton(item.id))}
           </nav>
           <FastNote/>
         </aside>
 
-        <section className="flex-1  rounded-[28px] border border-white/60 bg-white/90 p-6 shadow-xl shadow-slate-200/70 lg:p-8">
+        <section className="flex-1 rounded-[28px] border border-white/60 bg-white/90 p-4 shadow-xl shadow-slate-200/70 sm:p-5 lg:p-8">
+          <div className="mb-4 overflow-x-auto lg:hidden">
+            <div className="flex gap-2 pr-2">
+              {menuItems.map((item) => renderNavButton(item.id))}
+            </div>
+          </div>
+
           <p className="text-sm uppercase tracking-[0.35em] text-slate-400">
             {activePanel.subtitle}
           </p>
