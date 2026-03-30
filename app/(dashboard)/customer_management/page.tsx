@@ -803,10 +803,8 @@ const CustomerManagement = () => {
                               </CommandEmpty>
 
                               <CommandGroup
-                                onWheel={(e) => {
-                                  e.currentTarget.scrollTop += e.deltaY;
-                                }}
                                 className="max-h-64 overflow-auto"
+                                style={{ WebkitOverflowScrolling: "touch" }}
                               >
                                 <CommandItem
                                   value="Tất cả"
