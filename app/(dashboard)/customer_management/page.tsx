@@ -59,10 +59,10 @@ const CustomerManagement = () => {
     enabled: shouldLoadProvincesForFilter,
     context: "filter",
   });
-  const size = 4;
+  const size = 10;
   const queryClient = useQueryClient();
   const [historyPage, setHistoryPage] = useState(0);
-  const historyPageSize = 4;
+  const historyPageSize = 10;
 
   // Use first available data source (all return same data from API)
   const provincesData =

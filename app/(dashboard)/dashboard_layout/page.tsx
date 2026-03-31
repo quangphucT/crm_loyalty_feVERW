@@ -1,14 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import CustomerManagement from "../customer_management/page";
 import { menuItems } from "@/constants/menuItem-dashboard";
 import HeaderSideBar from "@/components/dashboard/HeaderSideBar";
 import FastNote from "@/components/dashboard/FastNote";
 import { panelContent } from "@/constants/panelContent-dashboard";
+import { useAuthStore } from "@/store/auth.store";
 
 const DashboardLayout = () => {
   const [activeItem, setActiveItem] = useState(menuItems[0].id);
+  const user = useAuthStore((state) => state.user);
+  const isHydrated = useAuthStore((state) => state.isHydrated);
+
+  const userInitials = useMemo(() => {
+    const name = user?.username?.trim();
+    if (!name) return "??";
+    const parts = name.split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? "";
+    const second = parts[1]?.[0] ?? parts[0]?.[1] ?? "";
+    const letters = `${first}${second}`.toUpperCase();
+    return letters || "??";
+  }, [user?.username]);
+
+  const displayUsername = isHydrated ? user?.username ?? "Ẩn danh" : "Đang tải...";
+  const displayRole = isHydrated ? user?.role ?? "Chưa có vai trò" : "Đang tải...";
   const activePanel = panelContent[activeItem];
   const renderNavButton = (itemId: string) => {
     const item = menuItems.find((m) => m.id === itemId);
@@ -77,6 +93,33 @@ const DashboardLayout = () => {
           <p className="mt-4 max-w-2xl text-base text-slate-600">
             {activePanel.description}
           </p>
+
+          <div className="mt-6 rounded-2xl border border-slate-100 bg-gradient-to-r from-sky-50/70 via-white to-amber-50/70 p-4 shadow-inner shadow-slate-200/60">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <span className="absolute inset-0 rounded-full bg-sky-200/60 blur-lg" aria-hidden />
+                  <div className="relative flex size-12 items-center justify-center rounded-full border border-white bg-white text-base font-semibold text-sky-700 shadow-sm">
+                    {userInitials}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Tài khoản</p>
+                  <p className="text-lg font-semibold text-slate-900">{displayUsername}</p>
+                  <p className="text-sm text-slate-500">Vai trò: {displayRole}</p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                  {isHydrated ? "Phiên đang mở" : "Khôi phục phiên"}
+                </span>
+                <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+                  {menuItems.find((item) => item.id === activeItem)?.label}
+                </span>
+              </div>
+            </div>
+          </div>
 
           {activeItem === "customers" && (
              <CustomerManagement/>
