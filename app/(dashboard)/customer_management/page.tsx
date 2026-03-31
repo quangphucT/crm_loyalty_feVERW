@@ -461,14 +461,14 @@ const CustomerManagement = () => {
 
         {/* Khách hàng (Tên + SĐT) */}
         <td className="px-3 md:px-4 py-3 text-slate-900">
-          <div className="max-w-[200px] md:max-w-[240px] text-left">
+          <div className="max-w-[70px] md:max-w-[100px] text-left">
             <div
-              className="block w-full truncate font-medium"
+              className="block w-full truncate whitespace-nowrap font-medium"
               title={customer.fullName}
             >
               {customer.fullName || "—"}
             </div>
-            <p className="block w-full truncate text-xs text-slate-400">
+            <p className="block w-full truncate whitespace-nowrap text-xs text-slate-400">
               {customer.phone || "—"}
             </p>
           </div>
@@ -476,7 +476,7 @@ const CustomerManagement = () => {
 
         {/* Email - FIX CHÍNH Ở ĐÂY */}
         <td className="px-3 md:px-4 py-3 text-slate-700">
-          <div className="truncate max-w-[220px] md:max-w-[260px]" title={customer.email || ""}>
+          <div className="truncate whitespace-nowrap max-w-[60px] md:max-w-[100px]" title={customer.email || ""}>
             {customer.email || "—"}
           </div>
         </td>
