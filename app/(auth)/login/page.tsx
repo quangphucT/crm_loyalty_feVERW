@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { loginFeatureCards } from "@/constants/login-features";
 import LoginSection from "@/components/auth/LoginSection";
 import LoginHeader from "@/components/auth/LoginHeader";
-import { useAuthStore } from "@/store/auth.store";
 import { v4 as uuidv4 } from "uuid";
 const loginSchema = z.object({
   username: z.string().min(1, "Vui lòng nhập tài khoản."),

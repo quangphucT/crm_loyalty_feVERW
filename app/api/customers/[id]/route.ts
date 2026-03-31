@@ -2,7 +2,6 @@ import { env } from "@/config/env";
 import { CUSTOMER_API } from "@/constants/api-endpoints";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-
 // delete
 export async function DELETE(
   _req: NextRequest,
@@ -31,14 +30,10 @@ export async function DELETE(
       },
     },
   );
-  if (!backendResponse.ok) {
-    return NextResponse.json(
-      { success: false },
-      { status: backendResponse.status },
-    );
-  }
+  // Lấy dữ liệu JSON từ backend, bất kể lỗi hay không
   const data = await backendResponse.json();
-  return NextResponse.json(data);
+  // Trả nguyên JSON backend về client
+  return NextResponse.json(data, { status: backendResponse.status });
 }
 
 
@@ -72,12 +67,8 @@ export async function PUT(
       body: JSON.stringify(body),
     },
   );
-  if (!backendResponse.ok) {
-    return NextResponse.json(
-      { success: false },
-      { status: backendResponse.status },
-    );
-  }
+    // Lấy dữ liệu JSON từ backend, bất kể lỗi hay không
   const data = await backendResponse.json();
-  return NextResponse.json(data);
+  // Trả nguyên JSON backend về client
+  return NextResponse.json(data, { status: backendResponse.status });
 }

@@ -48,7 +48,9 @@ export interface UpdateCustomerResponse {
 }
 
 export interface DeleteCustomerResponse {
+  status: number;
   message: string;
+  error: string
 }
 export interface UpdateCustomerVariables {
   id: number;
