@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sshagent(['vps-ssh-key']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no root@YOUR_VPS_IP "
+                        ssh -o StrictHostKeyChecking=no root@139.59.125.5 "
                         docker pull phucitdev/next-app:latest &&
                         docker-compose up -d
                         "
