@@ -2,7 +2,7 @@ import { useAuthStore } from "@/store/auth.store";
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: "/api",
+  baseURL: "/next-api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -47,7 +47,7 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await axios.post("/api/auth/refresh", {}, { withCredentials: true });
+        await axios.post("/next-api/auth/refresh", {}, { withCredentials: true });
 
         processQueue(null);
         return axiosClient(originalRequest);

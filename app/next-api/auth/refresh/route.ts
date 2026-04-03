@@ -47,7 +47,7 @@ export async function POST() {
     const res = NextResponse.json(data);
     res.cookies.set("accessToken", payloadAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       path: "/",
       sameSite: "lax",
       maxAge: 60,
