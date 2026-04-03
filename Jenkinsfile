@@ -24,10 +24,10 @@ pipeline {
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
-                    sh '''
-                        echo $PASS | docker login -u $USER --password-stdin
-                        docker push $DOCKER_IMAGE:latest
-                    '''
+                   sh '''
+    docker login -u $USER -p $PASS
+    docker push $DOCKER_IMAGE:latest
+'''
                 }
             }
         }
