@@ -34,14 +34,15 @@ pipeline {
 
         stage('Deploy VPS') {
             steps {
-                sshagent(['vps-ssh-key']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no root@139.59.125.5 "
-                        docker pull phucitdev/next-app:latest &&
-                        docker-compose up -d
-                        "
-                    '''
-                }
+                sshagent(['root']) {
+    sh '''
+        ssh -o StrictHostKeyChecking=no root@139.59.125.5 "
+        cd /root/fe-deploy &&
+        docker pull phucitdev/next-app:latest &&
+        docker-compose up -d
+        "
+    '''
+}
             }
         }
     }
