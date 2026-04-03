@@ -8,7 +8,12 @@ pipeline {
     stages {
         stage('Build Docker') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE:latest .'
+                sh '''
+                docker build \
+                --build-arg NEXT_PUBLIC_API_URL=https://crm.singles \
+                --build-arg NEXT_PUBLIC_PROVINCE_API_URL=https://provinces.open-api.vn/api \
+                -t $DOCKER_IMAGE:latest .
+                '''
             }
         }
 
