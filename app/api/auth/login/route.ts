@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   //  set cookie tại đây
   res.cookies.set("accessToken", data.data.accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     path: "/",
     sameSite: "lax",
     maxAge: 60,
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
   res.cookies.set("refreshToken", data.data.refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     path: "/",
     sameSite: "lax",
     maxAge: 60*5, 
